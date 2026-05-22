@@ -1,0 +1,1647 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TUK | Türkiye Ulusal Konseyi</title>
+    <meta name="description" content="Türkiye Ulusal Konseyi — Vatanın Sesi, Milletin Konseyi">
+
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* ============================================
+           TUK v3.0 — Ultra Premium Edition
+           ============================================ */
+
+        :root {
+            --void: #030303;
+            --obsidian: #070708;
+            --graphite: #0e0e10;
+            --carbon: #16161a;
+            --slate: #222228;
+            --bordo-deep: #1f0206;
+            --bordo-mid: #3a040c;
+            --crimson: #9b0b1e;
+            --crimson-bright: #c4112e;
+            --crimson-glow: rgba(155, 11, 30, 0.35);
+            --gold: #d4a853;
+            --gold-bright: #e8c87a;
+            --text-primary: #f5f5f7;
+            --text-secondary: #8e8e93;
+            --text-tertiary: #48484f;
+            --border-subtle: rgba(255, 255, 255, 0.04);
+            --border-crimson: rgba(155, 11, 30, 0.25);
+            --ease-expo: cubic-bezier(0.19, 1, 0.22, 1);
+            --ease-smooth: cubic-bezier(0.45, 0, 0.55, 1);
+            --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; font-size: 16px; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--void);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+            cursor: default;
+        }
+
+        ::selection { background: var(--crimson); color: #fff; }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 3px; }
+        ::-webkit-scrollbar-track { background: var(--void); }
+        ::-webkit-scrollbar-thumb { background: var(--bordo-mid); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--crimson); }
+
+        /* Noise Overlay */
+        .noise-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9998;
+            pointer-events: none;
+            opacity: 0.025;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 256px;
+        }
+
+        /* Custom Cursor */
+        .cursor-dot, .cursor-ring {
+            position: fixed;
+            top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+            mix-blend-mode: difference;
+        }
+        .cursor-dot { width: 6px; height: 6px; background: #fff; }
+        .cursor-ring {
+            width: 40px; height: 40px;
+            border: 1px solid rgba(255,255,255,0.4);
+            transition: width 0.4s var(--ease-expo), height 0.4s var(--ease-expo), 
+                        background 0.4s, border-color 0.4s;
+        }
+        .cursor-ring.hover {
+            width: 70px; height: 70px;
+            background: rgba(155, 11, 30, 0.08);
+            border-color: var(--crimson);
+        }
+        .cursor-ring.click {
+            width: 30px; height: 30px;
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* Preloader */
+        .preloader {
+            position: fixed;
+            inset: 0;
+            background: var(--void);
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1s var(--ease-expo), visibility 1s;
+        }
+        .preloader.done { opacity: 0; visibility: hidden; pointer-events: none; }
+        .preloader-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            letter-spacing: 12px;
+            color: var(--text-primary);
+            margin-bottom: 3rem;
+            overflow: hidden;
+        }
+        .preloader-text span {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(100%) rotate(5deg);
+            animation: charReveal 0.8s var(--ease-expo) forwards;
+        }
+        .preloader-track {
+            width: 180px;
+            height: 1px;
+            background: var(--carbon);
+            position: relative;
+            overflow: hidden;
+            border-radius: 1px;
+        }
+        .preloader-fill {
+            position: absolute;
+            top: 0; left: 0;
+            height: 100%; width: 0%;
+            background: var(--crimson);
+            animation: fillBar 2.2s var(--ease-smooth) forwards;
+            box-shadow: 0 0 20px var(--crimson-glow);
+        }
+        .preloader-label {
+            margin-top: 2rem;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+        }
+
+        @keyframes charReveal {
+            to { opacity: 1; transform: translateY(0) rotate(0); }
+        }
+        @keyframes fillBar {
+            0% { width: 0%; }
+            60% { width: 85%; }
+            100% { width: 100%; }
+        }
+
+        /* Ambient Mesh Gradient */
+        .ambient-mesh {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .mesh-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.4;
+            animation: blobFloat 20s ease-in-out infinite;
+        }
+        .mesh-blob:nth-child(1) {
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(155,11,30,0.3), transparent 70%);
+            top: -10%; left: 20%;
+            animation-delay: 0s;
+        }
+        .mesh-blob:nth-child(2) {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(100,5,20,0.2), transparent 70%);
+            bottom: -10%; right: 10%;
+            animation-delay: -7s;
+            animation-duration: 25s;
+        }
+        .mesh-blob:nth-child(3) {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(212,168,83,0.08), transparent 70%);
+            top: 40%; left: 60%;
+            animation-delay: -14s;
+            animation-duration: 18s;
+        }
+        @keyframes blobFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(50px, -30px) scale(1.1); }
+            66% { transform: translate(-30px, 40px) scale(0.9); }
+        }
+
+        /* Navigation */
+        .main-nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            z-index: 100;
+            padding: 1.8rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.8s var(--ease-expo);
+        }
+        .main-nav.scrolled {
+            background: rgba(3, 3, 3, 0.8);
+            backdrop-filter: blur(30px) saturate(1.5);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 1rem 5%;
+        }
+        .nav-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+        .nav-brand-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--text-primary);
+        }
+        .nav-brand-sub {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 8px;
+            color: var(--crimson);
+            font-style: italic;
+        }
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+        }
+        .nav-link {
+            position: relative;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.4rem 0;
+            transition: color 0.5s ease;
+            overflow: hidden;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 50%;
+            width: 0; height: 1px;
+            background: var(--crimson);
+            transition: width 0.5s var(--ease-expo), left 0.5s var(--ease-expo);
+        }
+        .nav-link:hover, .nav-link.active {
+            color: var(--text-primary);
+        }
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%; left: 0;
+        }
+        .nav-cta {
+            padding: 0.75rem 1.8rem;
+            border: 1px solid var(--border-crimson);
+            color: var(--crimson);
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.5s var(--ease-expo);
+            position: relative;
+            overflow: hidden;
+            background: transparent;
+        }
+        .nav-cta::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: var(--crimson);
+            transition: left 0.6s var(--ease-expo);
+            z-index: -1;
+        }
+        .nav-cta:hover {
+            color: #fff;
+            border-color: var(--crimson);
+            box-shadow: 0 0 30px var(--crimson-glow);
+        }
+        .nav-cta:hover::before { left: 0; }
+
+        /* Mobile */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 7px;
+            cursor: pointer;
+            z-index: 102;
+            padding: 10px;
+        }
+        .menu-toggle span {
+            display: block;
+            width: 30px;
+            height: 1.5px;
+            background: var(--text-primary);
+            transition: all 0.5s var(--ease-expo);
+            transform-origin: center;
+        }
+        .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+        .menu-toggle.active span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
+        .mobile-menu {
+            position: fixed;
+            inset: 0;
+            background: rgba(3, 3, 3, 0.97);
+            backdrop-filter: blur(40px);
+            z-index: 99;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.8s var(--ease-expo);
+        }
+        .mobile-menu.open { opacity: 1; visibility: visible; }
+        .mobile-menu .nav-link { font-size: 1.4rem; letter-spacing: 5px; }
+
+        /* Hero */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 8%;
+            overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                linear-gradient(to right, var(--void) 0%, var(--void) 25%, transparent 60%),
+                linear-gradient(to bottom, transparent 40%, var(--void) 100%);
+            z-index: 2;
+        }
+        .hero-bg-image {
+            position: absolute;
+            inset: 0;
+            background: url('https://images.unsplash.com/photo-1541963463532-d68292c34b19?q=80&w=2576&auto=format&fit=crop') center/cover;
+            opacity: 0.25;
+            transform: scale(1.15);
+            animation: heroBreath 15s ease-in-out infinite alternate;
+        }
+        @keyframes heroBreath {
+            to { transform: scale(1.25) translateY(-10px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 950px;
+            padding-top: 10rem;
+        }
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(40px);
+            animation: fadeUp 1.2s var(--ease-expo) 2.8s forwards;
+        }
+        .hero-eyebrow i {
+            color: var(--gold);
+            font-size: 0.9rem;
+        }
+        .hero-eyebrow span {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+        .hero-eyebrow::after {
+            content: '';
+            width: 50px;
+            height: 1px;
+            background: var(--gold);
+            opacity: 0.4;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 7vw, 7rem);
+            font-weight: 700;
+            line-height: 1.0;
+            letter-spacing: -1px;
+            margin-bottom: 2rem;
+        }
+        .hero-title .word {
+            display: inline-block;
+            overflow: hidden;
+            margin-right: 0.3em;
+        }
+        .hero-title .word span {
+            display: inline-block;
+            transform: translateY(120%) rotate(3deg);
+            animation: wordReveal 1.4s var(--ease-expo) forwards;
+            transform-origin: left bottom;
+        }
+        .hero-title .word:nth-child(1) span { animation-delay: 2.9s; }
+        .hero-title .word:nth-child(2) span { animation-delay: 3.05s; }
+        .hero-title .word:nth-child(3) span { animation-delay: 3.2s; }
+
+        .hero-slogan {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            font-weight: 400;
+            font-style: italic;
+            color: var(--text-secondary);
+            letter-spacing: 1px;
+            margin-bottom: 3.5rem;
+            opacity: 0;
+            animation: fadeUp 1.2s var(--ease-expo) 3.4s forwards;
+        }
+
+        .hero-cta-group {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeUp 1.2s var(--ease-expo) 3.6s forwards;
+        }
+
+        .btn-primary {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.2rem 2.5rem;
+            background: var(--crimson);
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.5s var(--ease-expo);
+            border-radius: 2px;
+        }
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: var(--crimson-bright);
+            transition: left 0.6s var(--ease-expo);
+            z-index: 0;
+        }
+        .btn-primary:hover::before { left: 0; }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 25px 50px rgba(155, 11, 30, 0.35);
+        }
+        .btn-primary span, .btn-primary i { position: relative; z-index: 1; }
+        .btn-primary i { transition: transform 0.4s var(--ease-expo); }
+        .btn-primary:hover i { transform: translateX(5px); }
+
+        .btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.2rem 2.5rem;
+            background: transparent;
+            color: var(--text-primary);
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.5s var(--ease-expo);
+            border-radius: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-ghost::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255,255,255,0.03);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.6s var(--ease-expo);
+            z-index: 0;
+        }
+        .btn-ghost:hover::before { transform: scaleX(1); }
+        .btn-ghost:hover {
+            border-color: var(--crimson);
+            color: var(--crimson);
+            transform: translateY(-3px);
+        }
+        .btn-ghost span, .btn-ghost i { position: relative; z-index: 1; }
+
+        .hero-stats {
+            position: absolute;
+            bottom: 5rem;
+            left: 8%; right: 8%;
+            display: flex;
+            gap: 5rem;
+            z-index: 10;
+            opacity: 0;
+            animation: fadeUp 1.2s var(--ease-expo) 3.9s forwards;
+        }
+        .stat-item {
+            position: relative;
+            padding-left: 2rem;
+        }
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 50%;
+            transform: translateY(-50%);
+            width: 1px; height: 50px;
+            background: var(--border-crimson);
+        }
+        .stat-item:first-child { padding-left: 0; }
+        .stat-item:first-child::before { display: none; }
+        .stat-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1;
+            background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .stat-label {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+            margin-top: 0.75rem;
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            z-index: 10;
+            opacity: 0;
+            animation: fadeUp 1.2s var(--ease-expo) 4.3s forwards;
+        }
+        .scroll-hint span {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.6rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+        }
+        .scroll-hint-line {
+            width: 1px;
+            height: 50px;
+            background: linear-gradient(to bottom, var(--crimson), transparent);
+            position: relative;
+            overflow: hidden;
+        }
+        .scroll-hint-line::after {
+            content: '';
+            position: absolute;
+            top: -100%; left: 0;
+            width: 100%; height: 100%;
+            background: var(--text-primary);
+            animation: scrollPulse 2.5s ease-in-out infinite;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes wordReveal {
+            from { transform: translateY(120%) rotate(3deg); opacity: 0; }
+            to { transform: translateY(0) rotate(0); opacity: 1; }
+        }
+        @keyframes scrollPulse {
+            0% { top: -100%; }
+            100% { top: 100%; }
+        }
+
+        /* Section Base */
+        .section {
+            position: relative;
+            padding: 12rem 8%;
+            z-index: 10;
+        }
+        .section-header {
+            margin-bottom: 7rem;
+            max-width: 750px;
+        }
+        .section-eyebrow {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--crimson);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+        .section-eyebrow::after {
+            content: '';
+            flex: 1;
+            max-width: 80px;
+            height: 1px;
+            background: var(--border-crimson);
+        }
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.2rem, 5vw, 4rem);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.5px;
+            margin-bottom: 1.75rem;
+        }
+        .section-title .char {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(80px) rotate(5deg);
+            transition: all 1s var(--ease-expo);
+        }
+        .section-title.visible .char {
+            opacity: 1;
+            transform: translateY(0) rotate(0);
+        }
+        .section-desc {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+            max-width: 600px;
+            font-weight: 300;
+        }
+
+        /* Reveal System */
+        .reveal {
+            opacity: 0;
+            transform: translateY(80px);
+            filter: blur(12px);
+            transition: all 1.4s var(--ease-expo);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
+        .stagger-1 { transition-delay: 0.1s; }
+        .stagger-2 { transition-delay: 0.2s; }
+        .stagger-3 { transition-delay: 0.35s; }
+        .stagger-4 { transition-delay: 0.5s; }
+        .stagger-5 { transition-delay: 0.65s; }
+
+        /* Doctrine */
+        .doctrine-grid {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 8rem;
+            align-items: start;
+        }
+        .doctrine-text {
+            font-size: 1.2rem;
+            line-height: 2.2;
+            color: var(--text-secondary);
+            font-weight: 300;
+        }
+        .doctrine-text p {
+            margin-bottom: 2rem;
+        }
+        .doctrine-text strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        .doctrine-features {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            position: sticky;
+            top: 10rem;
+        }
+        .doctrine-card {
+            padding: 2.5rem;
+            background: rgba(14, 14, 16, 0.6);
+            border: 1px solid var(--border-subtle);
+            transition: all 0.8s var(--ease-expo);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        .doctrine-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 3px; height: 100%;
+            background: var(--crimson);
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform 0.8s var(--ease-expo);
+        }
+        .doctrine-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(155,11,30,0.03), transparent);
+            opacity: 0;
+            transition: opacity 0.6s;
+        }
+        .doctrine-card:hover {
+            background: rgba(22, 22, 26, 0.8);
+            border-color: var(--border-crimson);
+            transform: translateX(15px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+        }
+        .doctrine-card:hover::before { transform: scaleY(1); }
+        .doctrine-card:hover::after { opacity: 1; }
+        .doctrine-card > * { position: relative; z-index: 2; }
+
+        .doctrine-card-icon {
+            font-size: 1.8rem;
+            color: var(--crimson);
+            margin-bottom: 1.5rem;
+            transition: transform 0.6s var(--ease-bounce);
+        }
+        .doctrine-card:hover .doctrine-card-icon {
+            transform: scale(1.2) rotate(-5deg);
+        }
+        .doctrine-card h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+        .doctrine-card p {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        /* Manifesto Band */
+        .manifesto-band {
+            background: var(--obsidian);
+            border-top: 1px solid var(--border-subtle);
+            border-bottom: 1px solid var(--border-subtle);
+            position: relative;
+            overflow: hidden;
+        }
+        .manifesto-band::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.015'%3E%3Cpath d='M50 50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10-10-4.477-10-10zm0-50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10-10-4.477-10-10zm-50 50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10-10-4.477-10-10zm0-50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10-10-4.477-10-10z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .manifesto-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .manifesto-quote {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4vw, 3.2rem);
+            font-weight: 500;
+            line-height: 1.5;
+            letter-spacing: 0.5px;
+            margin-bottom: 2.5rem;
+            color: var(--text-primary);
+            font-style: italic;
+        }
+        .manifesto-quote span {
+            color: var(--crimson);
+            font-weight: 700;
+            font-style: normal;
+        }
+        .manifesto-author {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+        }
+
+        /* Activity Matrix */
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--border-subtle);
+            border: 1px solid var(--border-subtle);
+            position: relative;
+        }
+        .matrix-cell {
+            background: var(--void);
+            padding: 4.5rem 3.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.8s var(--ease-expo);
+            cursor: pointer;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        .matrix-cell::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%; height: 0;
+            background: linear-gradient(to top, var(--bordo-deep), transparent);
+            transition: height 0.8s var(--ease-expo);
+            z-index: 0;
+        }
+        .matrix-cell:hover::after { height: 100%; }
+        .matrix-cell:hover {
+            border-color: var(--border-crimson);
+            transform: translateY(-8px);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+            z-index: 2;
+        }
+        .matrix-cell > * { position: relative; z-index: 1; }
+
+        .matrix-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--crimson);
+            opacity: 0.2;
+            line-height: 1;
+            margin-bottom: 2rem;
+            transition: all 0.6s var(--ease-expo);
+        }
+        .matrix-cell:hover .matrix-num {
+            opacity: 0.9;
+            transform: scale(1.1);
+            text-shadow: 0 0 40px var(--crimson-glow);
+        }
+        .matrix-cell h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 1.25rem;
+            color: var(--text-primary);
+            transition: color 0.4s;
+        }
+        .matrix-cell:hover h3 { color: var(--gold); }
+        .matrix-cell p {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+        .matrix-icon {
+            position: absolute;
+            top: 2.5rem;
+            right: 2.5rem;
+            font-size: 1.3rem;
+            color: var(--text-tertiary);
+            transition: all 0.6s var(--ease-expo);
+            z-index: 2;
+        }
+        .matrix-cell:hover .matrix-icon {
+            color: var(--crimson);
+            transform: rotate(15deg) scale(1.2);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--obsidian);
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(155, 11, 30, 0.06) 0%, transparent 50%);
+            animation: ctaPulse 10s ease-in-out infinite;
+        }
+        @keyframes ctaPulse {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.15) rotate(2deg); }
+        }
+        .cta-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 750px;
+            margin: 0 auto;
+        }
+        .cta-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 2rem;
+            letter-spacing: -0.5px;
+        }
+        .cta-title .word span {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 1s var(--ease-expo);
+        }
+        .cta-title.visible .word span {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .cta-desc {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            margin-bottom: 3.5rem;
+            line-height: 1.9;
+            font-weight: 300;
+        }
+        .cta-buttons {
+            display: flex;
+            gap: 1.25rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Footer */
+        .main-footer {
+            background: var(--void);
+            border-top: 1px solid var(--border-subtle);
+            padding: 6rem 8% 3rem;
+            position: relative;
+            z-index: 10;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 5rem;
+            margin-bottom: 5rem;
+        }
+        .footer-brand {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            margin-bottom: 1.25rem;
+            color: var(--text-primary);
+        }
+        .footer-desc {
+            font-size: 0.95rem;
+            color: var(--text-tertiary);
+            line-height: 1.8;
+            max-width: 320px;
+            font-weight: 300;
+        }
+        .footer-col h4 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .footer-links a {
+            color: var(--text-tertiary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.4s var(--ease-expo);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 300;
+        }
+        .footer-links a::before {
+            content: '';
+            width: 0;
+            height: 1px;
+            background: var(--crimson);
+            transition: width 0.4s var(--ease-expo);
+        }
+        .footer-links a:hover {
+            color: var(--crimson);
+            transform: translateX(5px);
+        }
+        .footer-links a:hover::before { width: 15px; }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 2.5rem;
+            border-top: 1px solid var(--border-subtle);
+        }
+        .footer-copy {
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+            letter-spacing: 0.5px;
+        }
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-subtle);
+            color: var(--text-tertiary);
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.4s var(--ease-expo);
+            border-radius: 2px;
+        }
+        .footer-social a:hover {
+            border-color: var(--crimson);
+            color: var(--crimson);
+            transform: translateY(-4px) scale(1.1);
+            box-shadow: 0 10px 30px rgba(155, 11, 30, 0.15);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .doctrine-grid { grid-template-columns: 1fr; gap: 4rem; }
+            .doctrine-features { position: static; }
+            .matrix-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 3rem; }
+            .hero-stats { gap: 3rem; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .menu-toggle { display: flex; }
+            .hero-stats { display: none; }
+            .hero { padding: 0 5%; min-height: 90vh; }
+            .section { padding: 7rem 5%; }
+            .matrix-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+            .footer-bottom { flex-direction: column; gap: 1.5rem; text-align: center; }
+            .hero-title { font-size: 2.5rem; }
+            .cursor-dot, .cursor-ring { display: none; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Noise Overlay -->
+    <div class="noise-overlay"></div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-text">
+            <span style="animation-delay:0s">T</span>
+            <span style="animation-delay:0.12s">U</span>
+            <span style="animation-delay:0.24s">K</span>
+        </div>
+        <div class="preloader-track">
+            <div class="preloader-fill"></div>
+        </div>
+        <div class="preloader-label">Sistem Başlatılıyor</div>
+    </div>
+
+    <!-- Ambient Mesh -->
+    <div class="ambient-mesh">
+        <div class="mesh-blob"></div>
+        <div class="mesh-blob"></div>
+        <div class="mesh-blob"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="main-nav" id="navbar">
+        <div class="nav-brand">
+            <div class="nav-brand-title">Türkiye Ulusal Konseyi</div>
+            <div class="nav-brand-sub">TUK</div>
+        </div>
+        <div class="nav-links">
+            <a href="#hero" class="nav-link active">Ana Sayfa</a>
+            <a href="#doktrin" class="nav-link">Doktrin</a>
+            <a href="#faaliyet" class="nav-link">Faaliyetler</a>
+            <a href="#iletisim" class="nav-cta">İletişim</a>
+        </div>
+        <div class="menu-toggle" id="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#hero" class="nav-link">Ana Sayfa</a>
+        <a href="#doktrin" class="nav-link">Doktrin</a>
+        <a href="#faaliyet" class="nav-link">Faaliyetler</a>
+        <a href="#iletisim" class="nav-link">İletişim</a>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero" id="hero">
+        <div class="hero-bg">
+            <div class="hero-bg-image"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-eyebrow">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>Resmi Dijital Portal</span>
+            </div>
+            <h1 class="hero-title">
+                <div class="word"><span>Türkiye</span></div>
+                <div class="word"><span>Ulusal</span></div>
+                <div class="word"><span>Konseyi</span></div>
+            </h1>
+            <p class="hero-slogan">"Vatanın Sesi, Milletin Konseyi!"</p>
+            <div class="hero-cta-group">
+                <a href="#doktrin" class="btn-primary">
+                    <span>Doktrini İncele</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+                <a href="#faaliyet" class="btn-ghost">
+                    <span>Faaliyetler</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="hero-stats">
+            <div class="stat-item">
+                <div class="stat-value" data-count="2026">0</div>
+                <div class="stat-label">Kuruluş Yılı</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" data-count="47">0</div>
+                <div class="stat-label">Stratejik Rapor</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" data-count="128">0</div>
+                <div class="stat-label">Uzman Kadro</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" data-count="100" data-suffix="%">0</div>
+                <div class="stat-label">Milli Bağımsızlık</div>
+            </div>
+        </div>
+        <div class="scroll-hint">
+            <span>Keşfet</span>
+            <div class="scroll-hint-line"></div>
+        </div>
+    </section>
+
+    <!-- Doctrine -->
+    <section class="section" id="doktrin">
+        <div class="section-header reveal">
+            <div class="section-eyebrow">Bölüm 01</div>
+            <h2 class="section-title" id="doctrineTitle">Ulusal Doktrin</h2>
+            <p class="section-desc">Türkiye Ulusal Konseyi, sarsılmaz bir devlet geleneği ve millet iradesinin ortak aklıyla şekillenmiş sivil bir strateji merkezidir.</p>
+        </div>
+        <div class="doctrine-grid">
+            <div class="doctrine-text reveal">
+                <p>Küresel risklerin ve jeopolitik kırılmaların yeniden kurgulandığı bu dönemde; <strong>tam bağımsızlık ilkesinden ödün vermeksizin</strong>, vatanın istikbalini teminat altına alacak entelektüel ve stratejik altyapıyı inşa eder.</p>
+                <p>Konseyimiz, sadece bir düşünce kuruluşu değil; aynı zamanda <strong>milli bekanın sivil savunma hattıdır.</strong> Her karar, her analiz ve her bildiri, devletimizin ve milletimizin gelecek nesillere güçlü ve bağımsız aktarılması misyonuyla şekillenir.</p>
+                <p>Stratejik öngörü, tarih bilinci ve jeopolitik hakimiyet anlayışıyla; bölgesel ve küresel aktörler karşısında Türkiye'nin çıkarlarını en üst düzeyde koruma ve geliştirme azmiyle çalışmaktadır.</p>
+            </div>
+            <div class="doctrine-features">
+                <div class="doctrine-card reveal stagger-1">
+                    <div class="doctrine-card-icon"><i class="fa-solid fa-crown"></i></div>
+                    <h3>Mutlak Egemenlik</h3>
+                    <p>Hiçbir küresel gücün veya vesayet odağının müdahale edemeyeceği, tam bağımsız fikri duruş ve karar alma mekanizması.</p>
+                </div>
+                <div class="doctrine-card reveal stagger-2">
+                    <div class="doctrine-card-icon"><i class="fa-solid fa-chess-knight"></i></div>
+                    <h3>Stratejik Akıl</h3>
+                    <p>Devletimizin bekası için veri odaklı, jeopolitik risk analizleri içeren sivil doktrinler ve öngörü raporları.</p>
+                </div>
+                <div class="doctrine-card reveal stagger-3">
+                    <div class="doctrine-card-icon"><i class="fa-solid fa-eye"></i></div>
+                    <h3>Vizyoner Öngörü</h3>
+                    <p>Geleceği şekillendirecek teknolojik, ekonomik ve sosyal trendleri önceden tespit eden istihbarat mekanizması.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Manifesto -->
+    <section class="section manifesto-band">
+        <div class="manifesto-content reveal">
+            <p class="manifesto-quote">"<span>Milliyetçilik</span>, bizim için sadece bir duygu değil; <span>devletin bekasını</span> koruyan stratejik bir zorunluluktur."</p>
+            <p class="manifesto-author">— TUK Stratejik Vizyon Beyannamesi</p>
+        </div>
+    </section>
+
+    <!-- Activity Matrix -->
+    <section class="section" id="faaliyet">
+        <div class="section-header reveal">
+            <div class="section-eyebrow">Bölüm 02</div>
+            <h2 class="section-title" id="activityTitle">Faaliyet Sahaları</h2>
+            <p class="section-desc">Milli çıkarlarımız doğrultusunda çok boyutlu ve disiplinlerarası çalışma alanları.</p>
+        </div>
+        <div class="matrix-grid reveal">
+            <div class="matrix-cell">
+                <i class="fa-solid fa-globe matrix-icon"></i>
+                <div class="matrix-num">I</div>
+                <h3>Jeopolitik Analiz</h3>
+                <p>Milli çıkarlarımız çerçevesinde bölgesel ve küresel tehdit simülasyonları, senaryo planlamaları ve stratejik öngörü raporları hazırlamak.</p>
+            </div>
+            <div class="matrix-cell">
+                <i class="fa-solid fa-network-wired matrix-icon"></i>
+                <div class="matrix-num">II</div>
+                <h3>Siber Güvenlik</h3>
+                <p>Geleceğin dijital dünyasında ulusal verinin, dijital sınırların ve kritik altyapının korunmasına yönelik çalışmalar yürütmek.</p>
+            </div>
+            <div class="matrix-cell">
+                <i class="fa-solid fa-landmark matrix-icon"></i>
+                <div class="matrix-num">III</div>
+                <h3>Kültürel Entegrasyon</h3>
+                <p>Tarih bilincini ve milli kimlik şuurunu modern çağın gereksinimleriyle harmanlayarak yarınlara aktarmak.</p>
+            </div>
+            <div class="matrix-cell">
+                <i class="fa-solid fa-chart-line matrix-icon"></i>
+                <div class="matrix-num">IV</div>
+                <h3>Ekonomik Strateji</h3>
+                <p>Tam bağımsız ekonomi modeli, enerji güvenliği ve üretim sanayisinin yeniden yapılandırılması politikaları geliştirmek.</p>
+            </div>
+            <div class="matrix-cell">
+                <i class="fa-solid fa-shield-halved matrix-icon"></i>
+                <div class="matrix-num">V</div>
+                <h3>İç Güvenlik</h3>
+                <p>Terörle mücadele, organize suçlarla etkin mücadele ve toplumsal huzurun sürdürülebilirliği için politika önerileri sunmak.</p>
+            </div>
+            <div class="matrix-cell">
+                <i class="fa-solid fa-satellite matrix-icon"></i>
+                <div class="matrix-num">VI</div>
+                <h3>Uzay ve Teknoloji</h3>
+                <p>Milli uzay programına sivil katkı, yapay zeka etiği ve özgün teknoloji geliştirme ekosisteminin desteklenmesi.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section cta-section" id="iletisim">
+        <div class="cta-content">
+            <h2 class="cta-title" id="ctaTitle">
+                <div class="word"><span>Milletin</span></div>
+                <div class="word"><span>Sesi</span></div>
+                <div class="word"><span>Olun</span></div>
+            </h2>
+            <p class="cta-desc reveal">Türkiye Ulusal Konseyi'ne katkıda bulunmak, raporlarımıza ulaşmak veya iş birliği talepleriniz için bizimle iletişime geçin.</p>
+            <div class="cta-buttons reveal stagger-2">
+                <a href="mailto:iletisim@tuk.gov.tr" class="btn-primary">
+                    <span>İletişim Kur</span>
+                    <i class="fa-solid fa-envelope"></i>
+                </a>
+                <a href="#" class="btn-ghost">
+                    <span>Raporları İndir</span>
+                    <i class="fa-solid fa-download"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-brand">Türkiye Ulusal Konseyi</div>
+                <p class="footer-desc">Sarsılmaz bir devlet geleneği ve millet iradesinin ortak aklıyla şekillenmiş sivil strateji merkezi.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Kurumsal</h4>
+                <ul class="footer-links">
+                    <li><a href="#doktrin">Ulusal Doktrin</a></li>
+                    <li><a href="#faaliyet">Faaliyet Alanları</a></li>
+                    <li><a href="#iletisim">İletişim</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Yayınlar</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Stratejik Raporlar</a></li>
+                    <li><a href="#">Analizler</a></li>
+                    <li><a href="#">Basın Açıklamaları</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="footer-copy">&copy; 2026 TUK. Tüm Hakları Saklıdır. Resmi Bilgilendirme Platformu.</p>
+            <div class="footer-social">
+                <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ============================================
+        // TUK v3.0 — Ultra Premium Interactions
+        // ============================================
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // 1. Preloader
+            const preloader = document.getElementById('preloader');
+            setTimeout(() => {
+                preloader.classList.add('done');
+            }, 2800);
+
+            // 2. Custom Cursor
+            const cursorDot = document.querySelector('.cursor-dot');
+            const cursorRing = document.querySelector('.cursor-ring');
+
+            if (window.matchMedia('(pointer: fine)').matches) {
+                let mouseX = 0, mouseY = 0;
+                let ringX = 0, ringY = 0;
+
+                window.addEventListener('mousemove', (e) => {
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+                    cursorDot.style.left = mouseX + 'px';
+                    cursorDot.style.top = mouseY + 'px';
+                });
+
+                function animateRing() {
+                    ringX += (mouseX - ringX) * 0.15;
+                    ringY += (mouseY - ringY) * 0.15;
+                    cursorRing.style.left = ringX + 'px';
+                    cursorRing.style.top = ringY + 'px';
+                    requestAnimationFrame(animateRing);
+                }
+                animateRing();
+
+                document.querySelectorAll('a, button, .matrix-cell, .doctrine-card, .btn-primary, .btn-ghost').forEach(el => {
+                    el.addEventListener('mouseenter', () => cursorRing.classList.add('hover'));
+                    el.addEventListener('mouseleave', () => cursorRing.classList.remove('hover'));
+                });
+
+                document.addEventListener('mousedown', () => cursorRing.classList.add('click'));
+                document.addEventListener('mouseup', () => cursorRing.classList.remove('click'));
+            } else {
+                cursorDot.style.display = 'none';
+                cursorRing.style.display = 'none';
+            }
+
+            // 3. Scroll Reveal with IntersectionObserver
+            const revealElements = document.querySelectorAll('.reveal');
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.08, rootMargin: '0px 0px -80px 0px' });
+            revealElements.forEach(el => revealObserver.observe(el));
+
+            // 4. Character Split Animation for Section Titles
+            function splitTextToChars(element) {
+                const text = element.textContent;
+                element.innerHTML = '';
+                text.split('').forEach((char, i) => {
+                    const span = document.createElement('span');
+                    span.className = 'char';
+                    span.textContent = char === ' ' ? ' ' : char;
+                    span.style.transitionDelay = (i * 0.03) + 's';
+                    element.appendChild(span);
+                });
+            }
+
+            const doctrineTitle = document.getElementById('doctrineTitle');
+            const activityTitle = document.getElementById('activityTitle');
+            if (doctrineTitle) splitTextToChars(doctrineTitle);
+            if (activityTitle) splitTextToChars(activityTitle);
+
+            const titleObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        titleObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            if (doctrineTitle) titleObserver.observe(doctrineTitle);
+            if (activityTitle) titleObserver.observe(activityTitle);
+
+            // 5. CTA Title Word Animation
+            const ctaTitle = document.getElementById('ctaTitle');
+            if (ctaTitle) {
+                const words = ctaTitle.querySelectorAll('.word');
+                words.forEach((word, i) => {
+                    const span = word.querySelector('span');
+                    if (span) span.style.transitionDelay = (i * 0.15) + 's';
+                });
+                const ctaObserver = new IntersectionObserver((entries) => {
+                    if (entries[0].isIntersecting) {
+                        ctaTitle.classList.add('visible');
+                        ctaObserver.unobserve(ctaTitle);
+                    }
+                }, { threshold: 0.4 });
+                ctaObserver.observe(ctaTitle);
+            }
+
+            // 6. Navbar Scroll
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                navbar.classList.toggle('scrolled', window.pageYOffset > 80);
+            }, { passive: true });
+
+            // 7. Active Nav Link
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    if (pageYOffset >= section.offsetTop - 300) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + current) {
+                        link.classList.add('active');
+                    }
+                });
+            }, { passive: true });
+
+            // 8. Mobile Menu
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            menuToggle.addEventListener('click', () => {
+                menuToggle.classList.toggle('active');
+                mobileMenu.classList.toggle('open');
+                document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+            });
+            mobileMenu.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    menuToggle.classList.remove('active');
+                    mobileMenu.classList.remove('open');
+                    document.body.style.overflow = '';
+                });
+            });
+
+            // 9. Animated Counters
+            const counters = document.querySelectorAll('.stat-value');
+            let counted = false;
+            const heroObserver = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting && !counted) {
+                    counted = true;
+                    counters.forEach((counter, i) => {
+                        setTimeout(() => {
+                            const target = parseInt(counter.getAttribute('data-count'));
+                            const suffix = counter.getAttribute('data-suffix') || '';
+                            const duration = 2500;
+                            const start = performance.now();
+
+                            function updateCounter(now) {
+                                const elapsed = now - start;
+                                const progress = Math.min(elapsed / duration, 1);
+                                const eased = 1 - Math.pow(1 - progress, 4);
+                                const current = Math.floor(eased * target);
+                                counter.textContent = current + suffix;
+                                if (progress < 1) requestAnimationFrame(updateCounter);
+                            }
+                            requestAnimationFrame(updateCounter);
+                        }, i * 200);
+                    });
+                }
+            }, { threshold: 0.3 });
+            heroObserver.observe(document.querySelector('.hero'));
+
+            // 10. Smooth Scroll
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            });
+
+            // 11. Hero Parallax
+            const heroBg = document.querySelector('.hero-bg-image');
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                if (heroBg && scrolled < window.innerHeight) {
+                    heroBg.style.transform = `scale(1.15) translateY(${scrolled * 0.35}px)`;
+                }
+            }, { passive: true });
+
+            // 12. Magnetic Buttons
+            if (window.matchMedia('(pointer: fine)').matches) {
+                document.querySelectorAll('.btn-primary, .btn-ghost').forEach(btn => {
+                    btn.addEventListener('mousemove', (e) => {
+                        const rect = btn.getBoundingClientRect();
+                        const x = e.clientX - rect.left - rect.width / 2;
+                        const y = e.clientY - rect.top - rect.height / 2;
+                        btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+                    });
+                    btn.addEventListener('mouseleave', () => {
+                        btn.style.transform = 'translate(0, 0)';
+                    });
+                });
+            }
+
+            // 13. 3D Tilt Effect on Matrix Cells
+            if (window.matchMedia('(pointer: fine)').matches) {
+                document.querySelectorAll('.matrix-cell').forEach(card => {
+                    card.addEventListener('mousemove', (e) => {
+                        const rect = card.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+                        const centerX = rect.width / 2;
+                        const centerY = rect.height / 2;
+                        const rotateX = (y - centerY) / 20;
+                        const rotateY = (centerX - x) / 20;
+                        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px) scale(1.02)`;
+                    });
+                    card.addEventListener('mouseleave', () => {
+                        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)';
+                    });
+                });
+            }
+
+            // 14. Slogan Text Scramble
+            class TextScramble {
+                constructor(el) {
+                    this.el = el;
+                    this.chars = '!<>-_\/[]{}—=+*^?#________';
+                    this.frame = 0;
+                }
+                setText(newText) {
+                    const length = newText.length;
+                    this.queue = [];
+                    for (let i = 0; i < length; i++) {
+                        this.queue.push({
+                            from: '',
+                            to: newText[i],
+                            start: Math.floor(Math.random() * 30),
+                            end: Math.floor(Math.random() * 30) + 30
+                        });
+                    }
+                    this.frame = 0;
+                    this.update();
+                }
+                update() {
+                    let output = '';
+                    let complete = 0;
+                    for (let i = 0; i < this.queue.length; i++) {
+                        let { to, start, end } = this.queue[i];
+                        if (this.frame >= end) {
+                            complete++;
+                            output += to;
+                        } else if (this.frame >= start) {
+                            output += `<span style="color:var(--crimson)">${this.chars[Math.floor(Math.random() * this.chars.length)]}</span>`;
+                        } else {
+                            output += '';
+                        }
+                    }
+                    this.el.innerHTML = output;
+                    if (complete < this.queue.length) {
+                        this.frame++;
+                        requestAnimationFrame(() => this.update());
+                    }
+                }
+            }
+
+            const sloganEl = document.querySelector('.hero-slogan');
+            if (sloganEl) {
+                const fx = new TextScramble(sloganEl);
+                setTimeout(() => fx.setText('"Vatanın Sesi, Milletin Konseyi!"'), 4000);
+            }
+
+            // 15. Mouse-following glow on doctrine cards
+            if (window.matchMedia('(pointer: fine)').matches) {
+                document.querySelectorAll('.doctrine-card').forEach(card => {
+                    card.addEventListener('mousemove', (e) => {
+                        const rect = card.getBoundingClientRect();
+                        const x = ((e.clientX - rect.left) / rect.width) * 100;
+                        const y = ((e.clientY - rect.top) / rect.height) * 100;
+                        card.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(155,11,30,0.08), rgba(14,14,16,0.6))`;
+                    });
+                    card.addEventListener('mouseleave', () => {
+                        card.style.background = 'rgba(14, 14, 16, 0.6)';
+                    });
+                });
+            }
+
+        });
+    </script>
+</body>
+</html>
